@@ -29,6 +29,7 @@ The tests use a fixture file to store API details. Update the `apiTestData.json`
   "invalidApiKey": "invalid_key"
 }
 ```
+Note: Never commit real API keys to version control.
 
 ## Running the Tests
 
@@ -53,3 +54,155 @@ npx cypress run
 - **Test for successful API call with historical month data**: Ensures that the API can retrieve intraday data for a specific historical month.
 - **Test for error condition when required 'symbol' parameter is missing**: Confirms that the API returns an error when the 'symbol' parameter is omitted.
 - **Test for error condition when invalid 'apikey' is provided**: Verifies that the API responds with an error when an invalid API key is used.
+
+
+## Manual Test Cases
+
+Test Case 1: Retrieve Intraday Data with Default Parameters
+
+Title: Verify successful retrieval of intraday data with default parameters
+
+Preconditions: Valid API key is available
+
+Test Steps:
+Send a GET request to the endpoint with the default parameters for symbol and interval.
+Use the valid API key in the request.
+
+Expected Results: The response status code should be 200, and the response body should contain the ‘Time Series (5min)’ property with data.
+
+-------------
+
+Test Case 2: Retrieve Full Output Size Data
+
+Title: Verify successful retrieval of full output size intraday data
+
+Preconditions: Valid API key is available
+
+Test Steps:
+Send a GET request to the endpoint with parameters for symbol, interval, and outputsize set to ‘full’.
+Use the valid API key in the request.
+
+Expected Results: The response status code should be 200, and the response body should contain the ‘Time Series (5min)’ property with a larger dataset.
+
+-------------
+
+Test Case 3: Missing Symbol Parameter
+
+Title: Verify error response when ‘symbol’ parameter is missing
+
+Preconditions: Valid API key is available
+
+Test Steps:
+Send a GET request to the endpoint without the symbol parameter.
+Use the valid API key in the request.
+
+Expected Results: The response status code should be one of [400, 401, 403, 404], indicating a client-side error.
+
+-------------
+
+Test Case 4: Invalid API Key
+
+Title: Verify error response when an invalid API key is provided
+
+Preconditions: None
+
+Test Steps:
+Send a GET request to the endpoint with an invalid API key.
+
+Expected Results: The response status code should be one of [400, 401, 403, 404], indicating an authentication or authorization error.
+
+-------------
+
+Test Case 5: Invalid Interval Parameter
+
+Title: Verify error response when an invalid ‘interval’ parameter is provided
+
+Preconditions: Valid API key is available
+
+Test Steps:
+Send a GET request to the endpoint with an invalid value for the interval parameter.
+Use the valid API key in the request.
+
+Expected Results: The response status code should be one of [400, 401, 403, 404], indicating a client-side error due to an invalid parameter.
+
+-------------
+
+Test Case 6: Retrieve Intraday Data for a Different Symbol
+
+Title: Verify successful retrieval of intraday data for a different stock symbol
+
+Preconditions: Valid API key is available
+
+Test Steps:
+Send a GET request to the endpoint with parameters for a different symbol (e.g., ‘AAPL’) and the interval.
+Use the valid API key in the request.
+
+Expected Results: The response status code should be 200, and the response body should contain the ‘Time Series (5min)’ property with data for the specified symbol.
+
+-------------
+
+Test Case 7: Retrieve Intraday Data with Compact Output Size
+
+Title: Verify successful retrieval of intraday data with compact output size
+
+Preconditions: Valid API key is available
+
+Test Steps:
+Send a GET request to the endpoint with parameters for symbol, interval, and outputsize set to ‘compact’.
+Use the valid API key in the request.
+
+Expected Results: The response status code should be 200, and the response body should contain a ‘Time Series (5min)’ property with a limited dataset.
+
+-------------
+
+Test Case 8: Invalid Symbol Parameter
+
+Title: Verify error response when an invalid ‘symbol’ parameter is provided
+
+Preconditions: Valid API key is available
+
+Test Steps:
+Send a GET request to the endpoint with an invalid value for the symbol parameter (e.g., ‘INVALID’).
+Use the valid API key in the request.
+
+Expected Results: The response status code should be one of [400, 401, 403, 404], indicating a client-side error due to an invalid symbol.
+
+-------------
+
+Test Case 9: Exceeding Rate Limit
+
+Title: Verify response when the API rate limit is exceeded
+
+Preconditions: Valid API key is available
+
+Test Steps:
+Send multiple GET requests to the endpoint in quick succession until the rate limit is exceeded.
+Use the valid API key in the requests.
+
+Expected Results: The response status code should indicate that the rate limit has been exceeded, which could be a 429 status code or another code as specified by the API documentation.
+
+-------------
+
+Test Case 10: Missing API Key
+
+Title: Verify error response when the API key parameter is missing
+
+Preconditions: None
+
+Test Steps:
+Send a GET request to the endpoint without the apikey parameter.
+
+Expected Results: The response status code should be one of [400, 401, 403, 404], indicating an authentication or authorization error due to the missing API key.
+
+-------------
+
+Test Case 11: Retrieve Intraday Data with Invalid Interval
+
+Title: Verify error response when an unsupported ‘interval’ parameter is provided
+Preconditions: Valid API key is available
+
+Test Steps:
+Send a GET request to the endpoint with an unsupported value for the interval parameter (e.g., ‘15sec’).
+Use the valid API key in the request.
+
+Expected Results: The response status code should be one of [400, 401, 403, 404], indicating a client-side error due to an unsupported interval.
