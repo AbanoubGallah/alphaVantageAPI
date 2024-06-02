@@ -1,0 +1,8 @@
+{
+    "baseUrl": "https://www.alphavantage.co/query",
+    "apiKey": "E5E0YWIWARZT3TDE",
+    "symbol": "IBM",
+    "interval": "5min",
+    "month": "2009-01",
+    "invalidApiKey": "invalid_key"
+}

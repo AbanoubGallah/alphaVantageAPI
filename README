@@ -1,0 +1,55 @@
+# Cypress Tests for TIME_SERIES_INTRADAY API
+
+This project contains Cypress tests for the `TIME_SERIES_INTRADAY` API provided by Alpha Vantage. The tests are designed to validate the functionality of the API endpoints and ensure that the correct data is returned under various conditions.
+
+## Prerequisites
+
+Before running the tests, make sure you have the following installed:
+- Node.js
+- npm (usually comes with Node.js)
+- Cypress
+
+## Installation
+
+1. Clone the repository to your local machine.
+2. Navigate to the project directory in your terminal.
+3. Run `npm install` to install the necessary dependencies.
+
+## Configuration
+
+The tests use a fixture file to store API details. Update the `apiTestData.json` file in the `cypress/fixtures` directory with your actual API key and any other data you wish to customize.
+
+```json
+{
+  "baseUrl": "https://www.alphavantage.co/query",
+  "apiKey": "YOUR_ACTUAL_API_KEY",
+  "symbol": "IBM",
+  "interval": "5min",
+  "month": "2009-01",
+  "invalidApiKey": "invalid_key"
+}
+```
+
+## Running the Tests
+
+To open the Cypress Test Runner, use the following command:
+
+```bash
+npx cypress open
+```
+
+In the Test Runner, click on the test file you wish to run, and the tests will execute in a new browser window.
+
+To run the tests headlessly, use the following command:
+
+```bash
+npx cypress run
+```
+
+## Test Cases Overview
+
+- **Test for successful API call with default parameters**: Validates that the API returns the latest 100 intraday OHLCV bars for the specified symbol and interval.
+- **Test for successful API call with full output size**: Checks if the API retrieves the full 30 days of intraday data for the given symbol and interval.
+- **Test for successful API call with historical month data**: Ensures that the API can retrieve intraday data for a specific historical month.
+- **Test for error condition when required 'symbol' parameter is missing**: Confirms that the API returns an error when the 'symbol' parameter is omitted.
+- **Test for error condition when invalid 'apikey' is provided**: Verifies that the API responds with an error when an invalid API key is used.
